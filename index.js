@@ -66,3 +66,51 @@ function deleteJob(id) {
   }
   filterJobs(currentFilter);
 }
+
+function renderJobs(data) {
+  const container = document.getElementById("job-list");
+  const emptyState = document.getElementById("empty-state");
+
+  if (data.length === 0) {
+    container.innerHTML = "";
+    emptyState.classList.remove("hidden");
+  } else {
+    emptyState.classList.add("hidden");
+    container.innerHTML = data.map(job => JobCard(job)).join("");
+  }
+
+  updateCounters();
+}
+
+function updateStatus(id, status) {
+  const job = jobs.find(j => j.id === id);
+  job.status = status;
+  filterJobs(currentFilter);
+}
+
+let currentFilter = "all";
+
+function filterJobs(type) {
+  currentFilter = type;
+
+  if (type === "all") {
+    filteredJobs = jobs;
+  } else {
+    filteredJobs = jobs.filter(job => job.status === type);
+  }
+
+  renderJobs(filteredJobs);
+}
+
+function updateCounters() {
+  document.getElementById("totalCount").innerText = jobs.length;
+  document.getElementById("interviewCount").innerText =
+    jobs.filter(j => j.status === "interview").length;
+  document.getElementById("rejectedCount").innerText =
+    jobs.filter(j => j.status === "rejected").length;
+}
+
+
+/* INITIAL LOAD */
+renderJobs(jobs);
+
