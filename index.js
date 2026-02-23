@@ -28,7 +28,7 @@
       <!-- DELETE BUTTON -->
       <button onclick="deleteJob(${job.id})"
         class="absolute top-3 right-3 text-gray-400 hover:text-red-600 text-lg font-bold">
-        ✕
+        <i class="fa-solid fa-trash"></i>
       </button>
   
       <h2 class="font-semibold text-lg">${job.company}</h2>
