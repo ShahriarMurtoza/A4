@@ -17,3 +17,52 @@ function getStatusColor(status) {
   return "bg-blue-100 text-blue-700";
 }
 
+
+function JobCard(job) {
+  return `
+  <div class="bg-white p-5 rounded-lg shadow mb-4 relative">
+
+    <!-- DELETE BUTTON -->
+    <button onclick="deleteJob(${job.id})"
+      class="absolute top-3 right-3 text-gray-400 hover:text-red-600 text-lg font-bold">
+      ✕
+    </button>
+
+    <h2 class="font-semibold text-lg">${job.company}</h2>
+    <p class="text-gray-500 text-sm">${job.role}</p>
+
+    <p class="text-sm mt-2">
+      ${job.location} • ${job.type} • ${job.salary}
+    </p>
+
+    <span class="inline-block mt-3 px-3 py-1 text-xs rounded ${getStatusColor(job.status)}">
+      ${job.status.replace("_"," ").toUpperCase()}
+    </span>
+
+    <p class="mt-3 text-gray-600 text-sm">
+      ${job.description}
+    </p>
+
+    <div class="mt-4 flex gap-2">
+      <button onclick="updateStatus(${job.id}, 'interview')"
+        class="border border-green-500 text-green-600 px-3 py-1 rounded">
+        INTERVIEW
+      </button>
+
+      <button onclick="updateStatus(${job.id}, 'rejected')"
+        class="border border-red-500 text-red-600 px-3 py-1 rounded">
+        REJECTED
+      </button>
+    </div>
+
+  </div>
+  `;
+}
+
+function deleteJob(id) {
+  const index = jobs.findIndex(job => job.id === id);
+  if (index !== -1) {
+    jobs.splice(index, 1);
+  }
+  filterJobs(currentFilter);
+}
